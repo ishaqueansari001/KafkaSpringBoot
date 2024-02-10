@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafkaspringboot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-label
+  template:
+    metadata:
+      labels:
+        app: kafka-label
+    spec:
+      containers:
+        - name: app
+          image: ishaqueansari001/kafka_springboot
+          ports:
+            - containerPort: 8080
+---
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafkaspringboot
+spec:
+  selector:
+    app: kafka-label
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
